@@ -133,7 +133,9 @@ These files can be visualized at [mapshaper][4].
 
 ## Acknowledgements
 
-The data files were obtained from the [Global Administrative Boundaries Database][3].
+The data files were originally obtained from the [Global Administrative Boundaries Database][3]. 
+
+Update (2026): The script now uses HTTPS to download GADM 4.1 data. It requires Node 22 or newer. The obsolete `unzip` dependency was replaced with `unzipper`.
 
 [1]: https://en.wikipedia.org/wiki/Shapefile
 [2]: https://en.wikipedia.org/wiki/GeoJSON

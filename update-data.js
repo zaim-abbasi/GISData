@@ -44,10 +44,10 @@ var topojson = require("topojson-server");
 var simplify = require("simplify-geojson");
 // misc dependencies
 var child_process = require("child_process");
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 var process = require("process");
-var unzip = require("unzip");
+var unzip = require("unzipper");
 var glob = require("glob");
 
 
@@ -55,7 +55,11 @@ var glob = require("glob");
 // http://stackoverflow.com/a/22793628/4591810
 function download(url, dest, cb, cbArgs) {
   var file = fs.createWriteStream(dest);
-  var request = http.get(url, function(response) {
+  var request = https.get(url, function(response) {
+    if (response.statusCode !== 200) {
+       console.error("Failed to download. Status code:", response.statusCode);
+       return;
+    }
     response.pipe(file);
     file.on('finish', function() {
       file.close(cb);
@@ -87,7 +91,7 @@ function convert(fpath, tol) {
 }
 
 
-var preBaseURL = "http://data.biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36_";
+var preBaseURL = "https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_";
 var postBaseURL = "_shp.zip"
 
 var country = process.argv.length >= 3 ? process.argv[2].toUpperCase() : 'PAK';
